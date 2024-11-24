@@ -1,0 +1,206 @@
+<div class="container col-12">
+    <header class="header col-12">
+        <div>
+            <h1>Quản lý khách hàng</h1>
+            <div class="search-bar">
+                <input type="text" placeholder="Tìm kiếm theo Tên, SĐT, Email">
+                <button class="search-icon">🔍</button>
+            </div>
+        </div>
+        <div>
+            <h6>Nhân Viên Kinh Doanh</h6>
+            <button class="add-customer-btn" (click)="openModal(true)">Thêm khách hàng</button>
+        </div>
+    </header>
+
+    <table class="customer-table col-12">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Mã KH</th>
+                <th>Họ và tên</th>
+                <th>SĐT</th>
+                <th>Email</th>
+                <th>Người tiếp thị</th>
+                <th>Nguồn</th>
+                <th>Ghi chú</th>
+                <th>Ngày tạo</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr
+                *ngFor="let item of data| paginate: { itemsPerPage: pagination.pageSize, currentPage: pagination.currentPage } ; let i = index">
+                <td class="text-click" (click)="openModal(false, item.id)">{{i+1}}</td>
+                <td class="text-click" (click)="openModal(false,item.id)">{{item.customer_code}}</td>
+                <td>{{item.full_name}}</td>
+                <td>{{item.phone_number}}</td>
+                <td>{{item.email}}</td>
+                <td>{{item.sales_person}}</td>
+                <td>{{item.source.title}}</td>
+                <td>{{item.notes}}</td>
+                <td>{{item.created_at}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <pagination-controls class="pagination" (pageChange)="pagination.currentPage= $event"></pagination-controls>
+</div>
+
+<div class="modal-overlay" [ngClass]="{'show': isModalOpen}" (click)="closeModal()">
+    <div class="modal-container" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+            <h4>Tạo khách hàng</h4>
+            <button class="close-btn" (click)="closeModal()">×</button>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="customerForm">
+                <div class="d-flex justify-content-between">
+                    <div class="form-group">
+                        <label for="customerName" class="form-label text-required text-form-label">Họ tên khách
+                            hàng</label>
+                        <input type="text" id="customerName" class="form-control" placeholder="Nhập họ tên"
+                            formControlName="full_name">
+                        <vt-error-message [control]="fullName" [controlName]="'Họ và Tên'"></vt-error-message>
+                    </div>
+                    <div style="width: 30%;" class="d-flex justify-content-between ">
+                        <label class="form-label text-form-label">Giới tính</label>
+                        <label>
+                            <input type="radio" name="gender" value="Nam" formControlName="gender" checked />
+                            Nam
+                        </label>
+                        <label>
+                            <input type="radio" name="gender" value="Nữ" formControlName="gender" />
+                            Nữ
+                        </label>
+                        <label>
+                            <input type="radio" name="gender" value="Khác" formControlName="gender" />
+                            Khác
+                        </label>
+                    </div>
+
+                    <div class="d-flex flex-column">
+                        <label class="form-label" for="date">Ngày sinh</label>
+                        <input type="date" id="date" name="date" formControlName="date_of_birth">
+                    </div>
+                </div>
+                <div class="d-flex gap-3">
+                    <div class="form-group ">
+                        <label for="phoneNumber" class="form-label text-required text-form-label">Nguồn khách
+                            hàng</label>
+                        <vt-select class="mb-3" [items]="socialMedias" [bindValue]="'id'" [bindLabel]="'name'"
+                            formControlName="source">
+                        </vt-select>
+                        <vt-error-message [control]="source" [controlName]="'Nguồn khác hàng'"></vt-error-message>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="form-label text-required text-form-label">Trạng thái</label>
+                        <vt-select class="mb-3" [items]="statuses" [bindValue]="'id'" [bindLabel]="'name'"
+                            formControlName="status">
+                        </vt-select>
+                        <vt-error-message [control]="status" [controlName]="'Trạng thái'"></vt-error-message>
+                    </div>
+                </div>
+                <div class="line"></div>
+                <h4>Thông tin liên hệ</h4>
+                <div class="d-flex mt-3 col-12 justify-content-between align-items-center ">
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="phoneNumber" class="form-label text-required text-form-label">Số điện
+                                thoại</label>
+                            <input type="text" id="phoneNumber" class="form-control" placeholder="Nhập SĐT"
+                                formControlName="phone_number">
+                            <vt-error-message [control]="phoneNumber"
+                                [controlName]="'Số điện thoại'"></vt-error-message>
+                        </div>
+                        <div class="form-group">
+                            <label for="phoneNumber" class="form-label text-required text-form-label">Sản Phẩm Quan
+                                Tâm</label>
+                            <ng-select [items]="services" [bindValue]="'id'" [bindLabel]="'name'"
+                                (change)="onServiceChange($event)" [multiple]="true"></ng-select>
+
+                        </div>
+                        <div class="form-group">
+                            <label for="phoneNumber" class="form-label text-form-label">Chú ý</label>
+                            <input type="text" id="phoneNumber" class="form-control" placeholder="Chú ý"
+                                formControlName="notes">
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="email" class="form-label text-required text-form-label">Email</label>
+                            <input type="email" id="email" class="form-control" placeholder="Nhập email">
+                        </div>
+                        <div class="form-group d-flex flex-column">
+                            <label for="email" class="form-label text-required text-form-label">Địa chỉ</label>
+                            <vt-select class="mb-3" [items]="cities" [bindValue]="'id'" [bindLabel]="'name'"
+                                formControlName="city" (change)="onCityChange($event)"></vt-select>
+                            <vt-error-message [control]="address" [controlName]="'Thành phố'"></vt-error-message>
+                            <vt-select class="mb-3" [items]="districtshanoi" [bindValue]="'id'" [bindLabel]="'name'"
+                                formControlName="district" (change)="onDistrictChange($event)"></vt-select>
+                            <vt-error-message [control]="district" [controlName]="'Quận'"></vt-error-message>
+                            <vt-select class="mb-3" [items]="streets" [bindValue]="'id'" [bindLabel]="'name'"
+                                formControlName="ward"></vt-select>
+                            <vt-error-message [control]="ward" [controlName]="'Quận'"></vt-error-message>
+                            <input type="text" class="form-control" placeholder="Nhập địa chỉ"
+                                formControlName="address">
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div>
+                            <label for="address" class="form-label text-required">Mạng xã hội</label>
+                            <div class="mediasocial d-flex gap-1 col-12">
+                                <div>
+                                    <vt-select class="selectmedia" [items]="socialMedias" [bindValue]="'id'"
+                                        [bindLabel]="'name'" formControlName="social_media">
+                                    </vt-select>
+                                    <vt-error-message [control]="socialMedia"
+                                        [controlName]="'Mạng xã hội'"></vt-error-message>
+                                </div>
+                                <input style="width: 70%;height: 35px;" type="text" id="address" class="form-control "
+                                    placeholder="Mạng xã hội" formControlName="detailed_info">
+                            </div>
+                            <div class="form-group">
+                                <label for="timeRange">Khung giờ</label>
+                                <vt-select id="timeRange" [items]="timeRanges" [bindLabel]="'display'"
+                                    [bindValue]="'start'" (change)="onTimeRangeChange($event)">
+                                </vt-select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="line"></div>
+                <h4>Thông tin chăm sóc Khách hàng</h4>
+                <table class="customer-table col-12">
+                    <thead>
+                        <tr>
+                            <th class="text-center">lần</th>
+                            <th class="text-center">Ngày</th>
+                            <th class="text-center">Kết quả chăm sóc</th>
+                            <th class="text-center">Cập nhập trạng thái</th>
+                        </tr>
+                    </thead>
+                    <tbody formArrayName="comments">
+                        <tr *ngFor="let item of comments.controls; let i = index" [formGroupName]="i">
+                            <td class="text-center">{{ i + 1 }}</td>
+                            <td>
+                                <input type="date" id="date" name="date" formControlName="time">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" formControlName="title">
+                            </td>
+                            <td>
+                                <vt-select [items]="statuses" [bindValue]="'id'" [bindLabel]="'name'"
+                                    formControlName="status_id"></vt-select>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="add-comment" (click)="addComment()"> <i class="fa-solid fa-circle-plus"></i>Thêm</div>
+            </form>
+
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" (click)="closeModal()">Hủy</button>
+            <button class="btn btn-primary" (click)="confirm()">Xác nhận</button>
+        </div>
+    </div>
+</div>

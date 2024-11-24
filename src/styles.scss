@@ -1,1 +1,266 @@
-/* You can add global styles to this file, and also import other style files */
+$dark: #222831;
+$dark-main-color: #836f50;
+$light-dark: #393e46;
+$main-color: #a96b11;
+$light-main-color: #b3fcff;
+$light: #fafafa;
+
+:host {
+  font-family: "Poppins";
+}
+
+.bg-dark,
+.btn-dark {
+  background: $dark !important;
+  color: $light;
+}
+
+.bg-light {
+  background: $light !important;
+  color: $dark !important;
+}
+
+.bg-transparent {
+  background: transparent !important;
+  border: transparent !important;
+}
+
+.bg-primary-gradient {
+  background: rgb(2, 188, 196);
+  background: $main-color;
+}
+
+.bg-primary {
+  background: $main-color !important;
+}
+
+.btn-primary {
+  background: $main-color !important;
+  border-color: $main-color !important;
+}
+
+.rounded-1 {
+  border-radius: 0.5rem !important;
+}
+
+.rounded-2 {
+  border-radius: 1rem !important;
+}
+
+.rounded-3 {
+  border-radius: 2rem !important;
+}
+
+.flip-vertical {
+  transform: scaleY(-1);
+}
+
+.text-primaryy {
+  color: $main-color !important;
+}
+
+.w-70 {
+  width: 70% !important;
+}
+
+.text-shadow-xl {
+  text-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.25) !important;
+}
+.text-form-label {
+  color: #8F8F8F;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.shadow-xl {
+  box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 20%) !important;
+}
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.modal.show {
+  display: flex;
+}
+
+.modal-content {
+  background: white;
+  padding: 1em;
+  border-radius: 5px;
+  max-width: 500px;
+  width: 100%;
+}
+.text-required::after {
+  content: '*'; 
+  color: red;
+  margin-left: 4px;
+  font-size: 14px; 
+  vertical-align: top; 
+}
+ng-select {
+  min-width:  200px;
+  font-family: Arial, sans-serif;
+  position: relative;
+  
+  .ng-select-container {
+    border: 1px solid #dcdcdc;
+    border-radius: 6px;
+    padding: 4px 10px;
+    background-color: #fff;
+    position: relative;
+    
+    &:hover {
+      border-color: #aaa;
+    }
+    
+    &::after {
+      content: '\f0dd';  
+      font-family: 'Font Awesome 5 Free';  
+      font-weight: 900;  
+      position: absolute;
+      top: 40%;
+      right: 10px;
+      transform: translateY(-50%);
+      font-size: 16px;
+      color: #aaa;
+    }
+  }
+
+  .ng-clear-wrapper {
+    display: none;
+  }
+
+  .ng-value-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; 
+    background-color: #fff;
+  }
+
+
+  input {
+    border: none;
+    outline: none;
+  }
+
+
+  .ng-placeholder {
+    font-size: 14px;
+    color: #aaa;
+  }
+
+
+  .ng-value {
+    display: flex;
+    align-items: center;
+    gap: 10px; 
+  }
+}
+
+.ng-dropdown-panel {
+  border: 1px solid #dcdcdc;
+  border-radius: 6px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  background-color: #fff;
+
+  .ng-option {
+    font-size: 14px;
+    padding: 8px 12px;
+    border-bottom: 1px solid #f1f1f1;
+
+    
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &:hover,
+    &.ng-option-selected {
+      background-color: #e6f3ff;
+      color: #333;
+    }
+  }
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.pagination li {
+  margin: 0 8px;
+  border-radius: 50%!important;
+  background-color: transparent;
+  color: #BD8306;
+  font-size: 16px;
+  font-weight: bold;
+  border: 1px solid #dee2e6;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  a{
+    border-radius: 50%!important;
+  }
+}
+
+.pagination li:hover {
+  background-color: #f8f9fa;
+  border-radius: 50%;
+  color: #BD8306;
+}
+
+.pagination li.active {
+  background-color: #ff7f00;
+  color: white;
+  border: 1px solid #ff7f00;
+}
+
+.pagination li.disabled {
+  background-color: #e0e0e0;
+  color: #b0b0b0;
+  cursor: not-allowed;
+  border: 1px solid #e0e0e0;
+}
+
+.pagination-controls .pagination-prev,
+.pagination-controls .pagination-next {
+  padding: 8px;
+  background-color: transparent;
+  color: #495057;
+  border: 1px solid #dee2e6;
+  cursor: pointer;
+  font-size: 18px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.pagination-controls .pagination-prev:hover,
+.pagination-controls .pagination-next:hover {
+  background-color: #BD8306;
+  color: #BD8306;
+}
+
+.pagination-controls .pagination-prev.active,
+.pagination-controls .pagination-next.active {
+  background-color: #BD8306;
+  color: white;
+  border: 1px solid #BD8306;
+}
+
+.pagination-controls li.ellipsis {
+  font-size: 18px;
+  color: #6c757d;
+  cursor: default;
+}

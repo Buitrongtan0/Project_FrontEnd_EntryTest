@@ -1,0 +1,60 @@
+<div class="container">
+    <div class="row">
+      <div class="col-md my-auto">
+        <h1 class="fw-bold mb-5">Log in</h1>
+        <form [formGroup]="loginForm" (ngSubmit)="login()">
+          <div class="mb-3">
+            <label for="email-input" class="form-label">Địa chỉ Email</label>
+            <div class="input-group has-validation">
+              <input
+                formControlName="username"
+                type="email"
+                class="form-control"
+                [ngClass]="{
+                  'is-invalid':
+                    loginForm.controls['username'].errors &&
+                    (loginForm.controls['username'].touched ||
+                      loginForm.controls['username'].dirty)
+                }"
+                id="email-input"
+                placeholder="name@gmail.com"
+              />
+              <div class="invalid-feedback">Email không hợp lệ.</div>
+            </div>
+          </div>
+  
+          <div class="mb-3">
+            <app-password-input
+              formControlName="password"
+              [errors]="loginForm.controls['password'].errors"
+              [touched]="loginForm.controls['password'].touched"
+              [dirty]="loginForm.controls['password'].dirty"
+            ></app-password-input>
+          </div>
+  
+          <button
+            (click)="login()"
+            class="btn btn-primary btn-lg rounded-1 shadow-xl w-100"
+          >
+            Đăng nhập
+          </button>
+        </form>
+  
+        <div class="d-flex mt-5">
+          <p class="my-auto text-secondary me-2">Nếu bạn chưa đăng ký.</p>
+          <a routerLink="/signup" class="btn btn-outline-success rounded-3"
+            >Đăng kí ngay</a
+          >
+        </div>
+      </div>
+  
+      <div class="col-md d-none d-md-block my-auto">
+        <h1 class="display-6 fw-light text-secondary text-center mb-5">
+          Đăng nhập hệ thống
+        </h1>
+ 
+
+      </div>
+    </div>
+</div>
+  

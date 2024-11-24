@@ -1,0 +1,66 @@
+<div class="container">
+    <div class="row">
+      <div class="col-md">
+        <h1 class="fw-bold mb-5">Sign Up</h1>
+        <form [formGroup]="signUpForm">
+          <div class="mb-3">
+            <label for="email-input" class="form-label"
+              >Địa chỉ email</label>
+            <div class="input-group has-validation">
+              <input
+                formControlName="username"
+                type="email"
+                class="form-control"
+                [ngClass]="{
+                  'is-invalid':
+                  username.errors &&
+                    (username.touched ||
+                    username.dirty),
+                  'is-valid':
+                    !username.errors &&
+                    (username.touched ||
+                    username.dirty)
+                }"
+                id="email-input"
+                placeholder="name@gmail.com"
+              />
+              <div class="invalid-feedback">Địa chỉ không được để trống.</div>
+            </div>
+          </div>
+     
+  
+          <div class="mb-3">
+            <app-password-input
+              formControlName="password"
+              [errors]="signUpForm.controls['password'].errors"
+              [touched]="signUpForm.controls['password'].touched"
+              [dirty]="signUpForm.controls['password'].dirty"
+            ></app-password-input>
+          </div>
+  
+          <button
+            (click)="handleSubmit()"
+            class="btn btn-primary btn-lg rounded-1 shadow-xl w-100"
+          >
+            Đăng kí
+          </button>
+        </form>
+  
+        <div class="d-flex mt-5">
+          <p class="my-auto text-secondary me-2">
+            Nếu bạn đã có tài khoản.
+          </p>
+          <a routerLink="/login" class="btn btn-outline-success rounded-3"
+            >Đăng nhập ngay</a
+          >
+        </div>
+      </div>
+  
+      <div class="col-md d-none d-md-block my-auto">
+        <h1 class="display-6 fw-light text-secondary text-center mb-5">
+          Đăng kí
+        </h1>
+      </div>
+    </div>
+  </div>
+  

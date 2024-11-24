@@ -1,0 +1,26 @@
+<ng-select [items]="items"  [bindLabel]="bindLabel" [bindValue]="bindValue" [groupBy]="bindGroup" [clearable]="clearable"
+    [(ngModel)]="value" [disabled]="disabled" (change)="valueChange($event)"
+    [placeholder]="placeholder" (blur)="onBlur()" class="ng-select-single-custom"
+    dropdownPosition="auto" [appendTo]="isAppendToBody ? 'body' : ''"
+    [searchable]="searchable" [searchFn]="customSearch"
+    [typeahead]="typeahead$" [minTermLength]="minTermLength" typeToSearchText="Please enter {{minTermLength}} or more characters"
+    [virtualScroll]="virtualScroll" [loading]="loading" (scroll)="scroll.emit($event)" (scrollToEnd)="scrollToEnd.emit()">
+    <ng-template ng-label-tmp let-item="item">
+        <span class="ng-value-label">
+            {{ item[bindLabel] }}
+        </span>
+    </ng-template>
+    <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index">
+        <span class="ng-option-text-label">{{ item[bindGroup] }}</span>
+    </ng-template>
+    <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+        <div class="ng-option-custom" [class.ng-option-custom-selected]="value && value === item[bindValue]">
+            <span class="ng-option-text-label" title="{{ item[bindLabel] }}">{{ item[bindLabel] }}</span>
+        </div>
+    </ng-template>
+    <ng-template ng-notfound-tmp let-searchTerm="searchTerm">
+        <div class="ng-option ng-option-disabled no-data">
+            {{ (items && items.length === 0) || !hasResultFilter ? emptyDataMsg : '' }}
+        </div>
+    </ng-template>
+</ng-select>
